@@ -30,12 +30,14 @@ router.route('/news')
 
 router.route('/contact')
 .post(function(req,res) {
-  res.json({ 
+  console.log('body : ', req.body)
+  res.send({ 
     message : `Adresse un message à la Team Martinus`,
-    name : req.body.name,
-    firstname : req.body.firstname,
+    fullName: req.body.fullName,
+    firstName : req.body.firstName,
+    city: req.body.city,
     email: req.body.email,
-    message: req.body.message,
+    phoneNumber: req.body.phoneNumber,
     methode : req.method
   })
 });
