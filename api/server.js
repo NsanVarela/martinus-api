@@ -52,24 +52,39 @@ router.route('/contact')
     <h3>Message</h3>
     <p>${req.body.message}</p>
   `;
-
-  let mailOptions = {
+  const mailOptions = {
     from: `Contact depuis le site : <${req.body.email}>`,
     to: `${dev}, ${contact}, ${sebastien}, ${deivid}`,
     subject: `Node Contact Request`,
     text: `Hello world?`,
     html: output,
   };
-
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return console.log(error);
+      res.json({
+        status: 'fail'
+      })
+    }  else {
+      // console.log(`Message sent: %s ${info.messageId}`);
+      // Preview only available when sending through an Ethereal account
+      // console.log(`Preview URL: %s ${nodemailer.getTestMessageUrl(info)}`);
+      res.json({
+        status: 'success'
+      })
     }
-    console.log(`Message sent: %s ${info.messageId}`);
-    // Preview only available when sending through an Ethereal account
-    console.log(`Preview URL: %s ${nodemailer.getTestMessageUrl(info)}`);
-
-    res.render('contact', {msg: 'Email has been sent'});
+    transporter.sendMail({
+      from: contact,
+      to: req.body.email,
+      subject: `Email envoyé avec succès.`,
+      text: ` Merci de nous avoir contactés ${req.body.firstName}! 
+        Dès que nous prendrons connaissance de votre message, un membre de l'équipe reviendra vers vous.`
+    }, function(error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Message sent: ' + info.response);
+      }
+    })
   });
 });
 
