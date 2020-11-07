@@ -3,11 +3,19 @@ const app = express()
 const port = 3000
 const cors = require("cors")
 const bodyParser = require("body-parser")
+const nodemailer = require('nodemailer')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
 
 const router = express.Router()
+const config = require("../environments/environment")
+const transporter = require('./services/mail.service')
+
+const dev = config.hosting.DEV
+const contact = config.hosting.CONTACT
+const sebastien = config.hosting.SEBASTIEN
+const deivid = config.hosting.DEIVID
 
 router.route('/')
 .all(function(req,res) { 
@@ -30,19 +38,41 @@ router.route('/news')
 
 router.route('/contact')
 .post(function(req,res) {
-  console.log('body : ', req.body)
-  res.send({ 
-    message : `Adresse un message à la Team Martinus`,
-    fullName: req.body.fullName,
-    firstName : req.body.firstName,
-    city: req.body.city,
-    email: req.body.email,
-    phoneNumber: req.body.phoneNumber,
-    methode : req.method
-  })
+  const output = `
+    <p>Vous avez une nouvelle demande de contact</p>
+    <h3>Détails du contact</h3>
+    <ul>
+      <li>Nom : ${req.body.fullName}</li>
+      <li>Prénom : ${req.body.firstName}</li>
+      <li>Ville : ${req.body.city}</li>
+      <li>Email : ${req.body.email}</li>
+      <li>Téléphone : ${req.body.phoneNumber}</li>
+    </ul>
+    <h3>Message</h3>
+    <p>${req.body.message}</p>
+  `;
+
+  let mailOptions = {
+    from: `Contact depuis le site : <${req.body.email}>`,
+    to: `${dev}, ${contact}, ${sebastien}, ${deivid}`,
+    subject: `Node Contact Request`,
+    text: `Hello world?`,
+    html: output,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log(`Message sent: %s ${info.messageId}`);
+    // Preview only available when sending through an Ethereal account
+    console.log(`Preview URL: %s ${nodemailer.getTestMessageUrl(info)}`);
+
+    res.render('contact', {msg: 'Email has been sent'});
+  });
 });
 
-router.route('/event')
+router.route(`/event`)
 .post(function(req, res) {
   res.json({
     message : `Ajoute un/des participant(s) à un event Martinus`,
