@@ -38,6 +38,7 @@ router.route('/news')
 
 router.route('/contact')
 .post(function(req,res) {
+  console.log(`From Website : `, req.body)
   const output = `
     <p>Vous avez une nouvelle demande de contact</p>
     <h3>Détails du contact</h3>

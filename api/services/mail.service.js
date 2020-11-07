@@ -10,7 +10,7 @@ let transporter = nodemailer.createTransport({
     pass: config.hosting.PASS, // generated ethereal password
   },
   tls: {
-    rejectUnauthorized: false
+    rejectUnauthorized: false // use false on local
   }
 });
 
