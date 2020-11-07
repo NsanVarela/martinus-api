@@ -54,8 +54,8 @@ router.route('/contact')
     <p>${req.body.contact.message}</p>
   `;
   const mailOptions = {
-    from: `Contact depuis le site : <${req.body.contact.email}>`,
-    to: `${dev}, ${contact}, ${sebastien}, ${deivid}`,
+    from: "Contact depuis le site :" + req.body.contact.email,
+    to: `${dev}, ${contact}`,
     subject: `Node Contact Request`,
     text: `Hello world?`,
     html: output,
@@ -70,7 +70,8 @@ router.route('/contact')
       // Preview only available when sending through an Ethereal account
       // console.log(`Preview URL: %s ${nodemailer.getTestMessageUrl(info)}`);
       res.json({
-        status: 'success'
+        status: 'success',
+        message: `Merci ${req.body.contact.firstName}, votre email est envoyé avec succès !`
       })
     }
     transporter.sendMail({
