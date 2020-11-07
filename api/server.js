@@ -38,22 +38,23 @@ router.route('/news')
 
 router.route('/contact')
 .post(function(req,res) {
-  console.log(`From Website : `, req.body)
+  // console.log(`From Website : `, req.body)
+
   const output = `
     <p>Vous avez une nouvelle demande de contact</p>
     <h3>Détails du contact</h3>
     <ul>
-      <li>Nom : ${req.body.fullName}</li>
-      <li>Prénom : ${req.body.firstName}</li>
-      <li>Ville : ${req.body.city}</li>
-      <li>Email : ${req.body.email}</li>
-      <li>Téléphone : ${req.body.phoneNumber}</li>
+      <li>Nom : ${req.body.contact.fullName}</li>
+      <li>Prénom : ${req.body.contact.firstName}</li>
+      <li>Ville : ${req.body.contact.city}</li>
+      <li>Email : ${req.body.contact.email}</li>
+      <li>Téléphone : ${req.body.contact.phoneNumber}</li>
     </ul>
     <h3>Message</h3>
-    <p>${req.body.message}</p>
+    <p>${req.body.contact.message}</p>
   `;
   const mailOptions = {
-    from: `Contact depuis le site : <${req.body.email}>`,
+    from: `Contact depuis le site : <${req.body.contact.email}>`,
     to: `${dev}, ${contact}, ${sebastien}, ${deivid}`,
     subject: `Node Contact Request`,
     text: `Hello world?`,
@@ -74,9 +75,9 @@ router.route('/contact')
     }
     transporter.sendMail({
       from: contact,
-      to: req.body.email,
+      to: req.body.contact.email,
       subject: `Email envoyé avec succès.`,
-      text: ` Merci de nous avoir contactés ${req.body.firstName}! 
+      text: ` Merci de nous avoir contactés ${req.body.contact.firstName}! 
         Dès que nous prendrons connaissance de votre message, un membre de l'équipe reviendra vers vous.`
     }, function(error, info) {
       if (error) {
