@@ -44,7 +44,8 @@ router.route('/newsletter')
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       res.json({
-        status: 'fail'
+        status: 'warning',
+        message: `Une erreur est survenue !`
       })
     }  else {
       // console.log(`Message sent: %s ${info.messageId}`);
@@ -97,7 +98,8 @@ router.route('/contact')
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       res.json({
-        status: 'fail'
+        status: 'warning',
+        message: `Une erreur est survenue !`
       })
     }  else {
       // console.log(`Message sent: %s ${info.messageId}`);
