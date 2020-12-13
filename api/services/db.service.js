@@ -31,5 +31,3 @@ const saveEmailUser = emailUser => {
 
 
 module.exports = { checkConnection, saveEmailUser };
-
-
