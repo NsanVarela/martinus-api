@@ -1,24 +1,47 @@
 const express = require('express');
 const router = express.Router();
 const { sendMartinusEmail, sendUserEmail } = require('../services/mail.service');
-const { saveEmailUser } = require('../services/db.service');
+const { saveEmailUser, saveUser, saveCart } = require('../services/db.service');
 
 router.post('/newsletter', async (req,res) => {
   const emailUser = req.body.contact.email;
-  console.log(emailUser);
   try {
     await saveEmailUser(emailUser);
-    await sendMartinusEmail(emailUser);
-    await sendUserEmail(emailUser);
-    res.json({
-      status: 'success',
-      message: `Merci, votre email nous servira à vous adresser la prochaine newsletter !`
-    });
+    await sendMartinusEmail(emailUser, 'newsletter');
+    await sendUserEmail(emailUser, 'newsletter');
+    res.json({ status: 'success', message: `Merci, votre email nous servira à vous adresser la prochaine newsletter !` });
   } catch (error) {
     res.json({ status: 'warning', message: `Une erreur est survenue !` });
   }
 });
 
+router.post('/contact', async (req,res) => {
+  const user = req.body.contact;
+  const emailUser = req.body.contact.email;
+  const firstNameUser = req.body.contact.firstName;
+  try {
+    await saveUser(user);
+    await sendMartinusEmail(emailUser, 'contact');
+    await sendUserEmail(emailUser, 'contact');
+    res.json({ status: 'success', message: `Merci ${firstNameUser}, votre message est envoyé avec succès !` });
+  } catch (error) {
+    res.json({ status: 'warning', message: `Une erreur est survenue !` });
+  }
+});
+
+router.post('/shop', async (req,res) => {
+  const cart = req.body.cart;
+  const emailUser = req.body.cart.email;
+  const firstNameUser = req.body.cart.firstName;
+  try {
+    await saveCart(cart);
+    await sendMartinusEmail(emailUser, 'shop');
+    await sendUserEmail(emailUser, 'shop');
+    res.json({ status: 'success', message: `Merci ${firstNameUser}, votre commande est envoyée avec succès !` });
+  } catch (error) {
+    res.json({ status: 'warning', message: `Une erreur est survenue ${error}!`});
+  }
+});
 
 // router.route('/contact')
 // .post(function(req,res) {

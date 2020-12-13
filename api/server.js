@@ -128,7 +128,7 @@ const bootstrap = async () => {
   } catch (err) {
     console.log(err.message);
   }
-  app.listen({ port }, () => console.log(`🚀 Server GraphQL ready at http://localhost:${port}`));
+  app.listen({ port }, () => console.log(`🚀 Server Martinu's ready at http://localhost:${port}`));
 };
 
 bootstrap();
