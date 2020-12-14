@@ -50,7 +50,7 @@ router.post('/shop', async (req,res) => {
 //     <p>Vous avez une nouvelle demande de contact</p>
 //     <h3>Détails du contact</h3>
 //     <ul>
-//       <li>Nom : ${req.body.contact.fullName}</li>
+//       <li>Nom : ${req.body.contact.lastName}</li>
 //       <li>Prénom : ${req.body.contact.firstName}</li>
 //       <li>Ville : ${req.body.contact.city}</li>
 //       <li>Email : ${req.body.contact.email}</li>

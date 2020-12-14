@@ -29,16 +29,16 @@ const saveEmailUser = emailUser => {
   });
 };
 
-const saveUser = user => {
+const saveUser = contact => {
   return new Promise(async (resolve, reject) => {
     Database('contact').insert({
-      nom: user.lastName,
-      prenom: user.firstName,
-      ville: user.city,
-      email: user.email,
-      telephone: user.phone,
-      message: user.message,
-      date: user.messageDate
+      nom: contact.lastName,
+      prenom: contact.firstName,
+      ville: contact.city,
+      email: contact.email,
+      telephone: contact.phoneNumber,
+      message: contact.message,
+      // date: contact.messageDate
     })
     .then(() => resolve())
     .catch(() => reject())
@@ -52,7 +52,7 @@ const saveCart = cart => {
       prenom: cart.firstName,
       ville: cart.city,
       email: cart.email,
-      telephone: cart.phone,
+      telephone: cart.phoneNumber,
       genre: cart.gender,
       nombre_tshirt: cart.itemNumber,
     })
