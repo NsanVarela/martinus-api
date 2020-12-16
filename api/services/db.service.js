@@ -4,8 +4,6 @@ const { knexCamelCaseMappers } = require('../db/helpers');
 
 const environment = process.env.NODE_ENV || 'development';
 
-// console.log(environment);
-
 const Database = knex({
   ...config[environment],
   ...knexCamelCaseMappers(),
@@ -61,7 +59,24 @@ const saveCart = cart => {
   });
 };
 
+const saveReservation = event => {
+  return new Promise(async (resolve, reject) => {
+    Database('event').insert({
+      nom: event.lastName,
+      prenom: event.firstName,
+      ville: event.city,
+      email: event.email,
+      telephone: event.phoneNumber,
+      evenement: event.eventTitle,
+      nombre_ticket: event.nbreTicket,
+      type: event.eventType,
+    })
+    .then(() => resolve())
+    .catch(() => reject())
+  });
+}
 
-module.exports = { checkConnection, saveEmailUser, saveUser, saveCart };
+
+module.exports = { checkConnection, saveEmailUser, saveUser, saveCart, saveReservation };
 
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { sendMartinusEmail, sendUserEmail } = require('../services/mail.service');
-const { saveEmailUser, saveUser, saveCart } = require('../services/db.service');
+const { saveEmailUser, saveUser, saveCart, saveReservation } = require('../services/db.service');
 
 router.post('/newsletter', async (req,res) => {
   const emailUser = req.body.contact.email;
@@ -39,9 +39,24 @@ router.post('/shop', async (req,res) => {
     await sendUserEmail(emailUser, 'shop');
     res.json({ status: 'success', message: `Merci ${firstNameUser}, votre commande est envoyée avec succès !` });
   } catch (error) {
-    res.json({ status: 'warning', message: `Une erreur est survenue ${error}!`});
+    res.json({ status: 'warning', message: `Une erreur est survenue ${error}!` });
   }
 });
+
+router.post('/event', async (req, res) => {
+  console.log('In', req.body.event);
+  const event = req.body.event;
+  const emailUser = req.body.event.email;
+  const firstNameReservation = req.body.event.firstName;
+  try {
+    await saveReservation(event);
+    await sendMartinusEmail(emailUser, 'event');
+    await sendUserEmail(emailUser, 'event');
+    res.json({ status: 'success', message: `Merci ${firstNameReservation}, votre réservation est envoyée avec succès !` });
+  } catch (error) {
+    res.json({ status: 'warning', message: `Une erreur est survenue ${error}!` });
+  }
+})
 
 // router.route('/contact')
 // .post(function(req,res) {
