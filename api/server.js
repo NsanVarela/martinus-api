@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const HOST = '0.0.0.0';
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -128,7 +129,7 @@ const bootstrap = async () => {
   } catch (err) {
     console.log(err.message);
   }
-  app.listen({ port }, () => console.log(`🚀 Server Martinu's ready at http://localhost:${port}`));
+  app.listen({ port }, () => console.log(`🚀 Server Martinu's ready at http://${HOST}:${port}`));
 };
 
 bootstrap();
