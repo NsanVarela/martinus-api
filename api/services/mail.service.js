@@ -4,7 +4,7 @@ const contact = process.env.CONTACT;
 
 let transporter = nodemailer.createTransport({
   host: process.env.HOST,
-  port: process.env.PORT,
+  port: process.env.PORT_SMTP,
   secure: false,
   auth: {
     user: process.env.CONTACT,

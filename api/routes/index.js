@@ -3,6 +3,10 @@ const router = express.Router();
 const { sendMartinusEmail, sendUserEmail } = require('../services/mail.service');
 const { saveEmailUser, saveUser, saveCart, saveReservation } = require('../services/db.service');
 
+router.get('/health', async (req,res) => {
+    res.json({ status: 'success', message: `Hello` });
+});
+
 router.post('/newsletter', async (req,res) => {
   const emailUser = req.body.contact.email;
   try {
