@@ -59,7 +59,6 @@ const sendMartinusEmail = (emailUser, type) => {
 };
 
 const sendUserEmail = (emailUser, type) => {
-  console.log('type : ', type)
   return new Promise((resolve, reject) => {
     const newsletterOption = 'Merci de nous avoir contactés ! Le prochain numéro de la newsletter vous sera adressé par email';
     const contactOption = `Votre message a bien été envoyé. Un membre de l'équipe de l'association Martinu's prendra contact avec vous.`;
