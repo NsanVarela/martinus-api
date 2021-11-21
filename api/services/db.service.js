@@ -76,7 +76,18 @@ const saveReservation = event => {
   });
 }
 
+const findEvents = () => new Promise(async (resolve, reject) => {
+  console.log('In findEvents...');
+  try {
+    console.log('Data ... : ', Database('events').select());
+    await Database('events').select();
+    resolve(true);
+  } catch (error) {
+    reject(new Error(`🔒 Error Get events list Sql => ${error.message}`));
+  }
+});
 
-module.exports = { checkConnection, saveEmailUser, saveUser, saveCart, saveReservation };
+
+module.exports = { checkConnection, saveEmailUser, saveUser, saveCart, saveReservation, findEvents };
 
 

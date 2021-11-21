@@ -15,9 +15,6 @@ app.use(cors());
 
 app.use('/', routes);
 
-const db = require("./models");
-db.sequelize.sync();
-
 const bootstrap = async () => {
   try {
     await checkConnection();

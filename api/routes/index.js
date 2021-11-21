@@ -60,6 +60,15 @@ router.post('/event', async (req, res) => {
   } catch (error) {
     res.json({ status: 'warning', message: `Une erreur est survenue ${error}!` });
   }
+});
+
+router.get('/events', async (req,res) => {
+  try {
+    await findEvents();
+    res.json({ status: 'succes', message: 'This is the events'});
+  } catch (error) {
+    res.json({ status: 'warning', message: `Une erreur est survenue ${error}!` });
+  }
 })
 
 module.exports = router;
